@@ -13,6 +13,7 @@
                <h1 class="heading">RurbanSoft</h1>
                <div>
                		<ul>
+                        <li> <h4><a href="homePage.php" >Home</a></h4></li>
 						<li> <a href="homePage.php?logout='1'" >Logout</a></li>
             		</ul>
             	</div>

@@ -70,7 +70,7 @@ if (isset($_POST['login_user'])) {
   	$results = mysqli_query($db, $query);
     $row = mysqli_fetch_assoc($results);
   	if (mysqli_num_rows($results) == 1) {
-      $_SESSION['Name'] = $row["Name"];;
+      $_SESSION['Name'] = $row["Name"];
   	  $_SESSION['PhoneNumber'] = $phoneNumber;
   	  $_SESSION['success'] = "You are now logged in";
   	  header('location: homePage.php');
@@ -81,11 +81,19 @@ if (isset($_POST['login_user'])) {
 }
 
 if(isset($_POST['approve'])){
-  $elements = $_POST['check'];
+  if(!empty($_POST['check'])){
+  $phone=$_POST['approve'];
+  $query = "SELECT Name FROM users WHERE PhoneNumber='$phone'";
+  $results = mysqli_query($db, $query);
+  $row = mysqli_fetch_assoc($results);
+  $name=$row["Name"];
+  $current_timestamp = microtime(TRUE);
+  $timestamp = date("d-m-Y", $current_timestamp);
   foreach($_POST['check'] as $value){
-    $dbQuery = "INSERT INTO workitem_approved (workItem_ID, ApprovedByName, ApproveByPhoneNumber) VALUES ('".$value."', 'Riyanshi', '7379333348')";   
+    $dbQuery = "INSERT INTO workitem_approved (workItem_ID, ApprovedByName, ApproveByPhoneNumber, ApprovedTime) VALUES ('".$value."', '".$name."', '".$phone."', '".$timestamp."')";   
     $result=mysqli_query($db,$dbQuery);
   }
+ }
 }
 
 ?>

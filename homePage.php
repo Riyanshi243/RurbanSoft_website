@@ -26,7 +26,7 @@
                <h1 class="heading">RurbanSoft</h1>
                <div>
                		<ul>
-						<li> <a href="homePage.php?logout='1'" >Logout</a></li>
+						        <li> <a href="homePage.php?logout='1'" >Logout</a></li>
             		</ul>
             	</div>
         	</nav>
@@ -46,8 +46,16 @@
   		<?php endif ?>
       <?php  if (isset($_SESSION['Name'])) : ?>
     		<h2 class="user">Welcome <strong><?php echo $_SESSION['Name']; ?></strong></h2>
-    	<?php endif ?>
+        <?php $name =$_SESSION['Name'];
+              $phone=$_SESSION['PhoneNumber'];
+    	 endif ?>
 		</div>
+          <script type="text/javascript">
+                var x = "<?php echo"$name"?>";
+                localStorage.setItem("Name",x);
+                var y = "<?php echo"$phone"?>";
+                localStorage.setItem("Phone",y);
+          </script>
         
         <div class="rows">
           <div class="boxs" id="AllWorkItems">
@@ -72,6 +80,17 @@
                 };
           </script>
 
+          <div class="boxs" id="PhaseWise">
+            <p class="headings"> View WorkItems Phase Wise </p>
+          </div>
+          <script>
+                var PhaseWise = document.getElementById('PhaseWise');
+                PhaseWise.style.cursor = 'pointer';
+                PhaseWise.onclick = function() {
+                    window.open("PhaseWise.php","_self");
+                };
+          </script>
+
           <div class="boxs" id="ApproveWorkItems">
             <p class="headings"> Approve WorkItems </p>
           </div>
@@ -83,14 +102,14 @@
                 };
           </script>
 
-          <div class="boxs" id="PhaseWise">
-            <p class="headings"> View WorkItems Phase Wise </p>
+          <div class="boxs" id="viewApprovedItems">
+            <p class="headings"> View Approved WorkItems </p>
           </div>
           <script>
-                var PhaseWise = document.getElementById('PhaseWise');
-                PhaseWise.style.cursor = 'pointer';
-                PhaseWise.onclick = function() {
-                    window.open("PhaseWise.php","_self");
+                var viewApprovedItems = document.getElementById('viewApprovedItems');
+                viewApprovedItems.style.cursor = 'pointer';
+                viewApprovedItems.onclick = function() {
+                    window.open("ViewApprovedItems.php","_self");
                 };
           </script>
 

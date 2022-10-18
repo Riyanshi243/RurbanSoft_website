@@ -14,6 +14,7 @@
                <h1 class="heading">RurbanSoft</h1>
                <div>
                		<ul>
+                        <li> <h4><a href="homePage.php" >Home</a></h4></li>
 						<li> <h4><a href="homePage.php?logout='1'" >Logout</a></h4></li>
             		</ul>
             	</div>
@@ -25,6 +26,21 @@
     <div class="main">
     <h1>Following are the Existing WorkItems in Central Database:</h1>
     <br>
+    <!-- <form action="" method="post">
+    <label for="filter-1">Choose the filter</label>
+        <select name="filter">
+            <option value="" disabled selected>--Choose option--</option>
+            <option value="1">All workitems</option>
+            <option value="2">All workitems</option>
+            <option value="3">View all workitems approved except mine </option>
+        </select>
+        <button type="submit" id="applyBtn" name="submit" onclick="GetSelected()" >Apply</button>
+    </form>
+    <script>
+        function GetSelected() {
+        document.getElementById("applyBtn").value = localStorage.getItem("Phone");
+    }
+    </script> -->
     <table class="table table-hover">
     <thead>
       <tr>
