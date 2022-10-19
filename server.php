@@ -90,7 +90,7 @@ if(isset($_POST['approve'])){
   $current_timestamp = microtime(TRUE);
   $timestamp = date("d-m-Y", $current_timestamp);
   foreach($_POST['check'] as $value){
-    $dbQuery = "INSERT INTO workitem_approved (workItem_ID, ApprovedByName, ApproveByPhoneNumber, ApprovedTime) VALUES ('".$value."', '".$name."', '".$phone."', '".$timestamp."')";   
+    $dbQuery = "INSERT INTO workitem_approved (workItem_ID, ApprovedByName, ApproveByPhoneNumber, ApprovedDate) VALUES ('".$value."', '".$name."', '".$phone."', '".$timestamp."')";   
     $result=mysqli_query($db,$dbQuery);
   }
  }

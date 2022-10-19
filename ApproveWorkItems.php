@@ -75,7 +75,6 @@
                     <td ><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['Image']); ?>"  width="100" height="100"/> </td>
                     <td><?php echo $row["UserName"]; ?></td>
                     <td><?php echo $row["UserPhoneNumber"]; ?></td>
-                    
                    
             </tr>
     <?php endwhile;?>

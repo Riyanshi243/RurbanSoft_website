@@ -23,8 +23,180 @@
 </div> 
 <section id="home">
     <div class="main">
+    <h1>All WorkItems on MAP</h1><br>
+    <div>
+    <form action="" method="post">
+    
+        <table>
+            <tr>
+                <td colspan="4">
+                    <label for="filter-1">Apply filters</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="state">
+                        <option value="" disabled selected>--Choose state--</option>
+                        <option value="1">All States</option>
+                        <?php
+                            $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
+                            $dbQuery = " SELECT DISTINCT state_name FROM cluster_master ORDER BY state_name ASC";   
+                            $result=mysqli_query($db,$dbQuery);
+                            if (mysqli_num_rows($result)>0)
+                            while($row = mysqli_fetch_assoc($result)):?>
+                                <option value="<?php echo $row["state_name"]; ?>"><?php echo $row["state_name"]; ?></option>  
+                        <?php endwhile; ?>
+                    </select>
+                </td>
+                <td>
+                    <select name="district">
+                        <option value="" disabled selected>--Choose district--</option>
+                        <option value="1">All districts</option>
+                        <?php
+                            $dbQuery = " SELECT DISTINCT district_name FROM cluster_master ORDER BY district_name ASC";   
+                            $result=mysqli_query($db,$dbQuery);
+                            if (mysqli_num_rows($result)>0)
+                            while($row = mysqli_fetch_assoc($result)):?>
+                                <option value="<?php echo $row["district_name"]; ?>"><?php echo $row["district_name"]; ?></option>  
+                        <?php endwhile;?>
+                    </select>
+                </td>
+                <td>
+                    <select name="cluster">
+                        <option value="" disabled selected>--Choose Cluster--</option>
+                        <option value="1">All Cluster</option>
+                        <?php
+                            $dbQuery = " SELECT DISTINCT cluster_name FROM cluster_master ORDER BY cluster_name ASC";   
+                            $result=mysqli_query($db,$dbQuery);
+                            if (mysqli_num_rows($result)>0)
+                            while($row = mysqli_fetch_assoc($result)):?>
+                                <option value="<?php echo $row["cluster_name"]; ?>"><?php echo $row["cluster_name"]; ?></option>  
+                        <?php endwhile;?>
+                    </select>
+                </td>
+                <td>
+                    <select name="gp">
+                        <option value="" disabled selected>--Choose GP--</option>
+                        <option value="1">All GP</option>
+                        <?php
+                            $dbQuery = " SELECT DISTINCT gp_name FROM cluster_master ORDER BY gp_name ASC";   
+                            $result=mysqli_query($db,$dbQuery);
+                            if (mysqli_num_rows($result)>0)
+                            while($row = mysqli_fetch_assoc($result)):?>
+                                <option value="<?php echo $row["gp_name"]; ?>"><?php echo $row["gp_name"]; ?></option>  
+                        <?php endwhile;?>
+                    </select>
+                </td>
+            </tr>
+            <br>
+            <tr>
+                <td>
+                    <select name="component">
+                        <option value="" disabled selected>--Choose component--</option>
+                        <option value="1">All Components</option>
+                        <?php
+                            $dbQuery = " SELECT DISTINCT component_name FROM component_master ORDER BY component_name ASC";   
+                            $result=mysqli_query($db,$dbQuery);
+                            if (mysqli_num_rows($result)>0)
+                            while($row = mysqli_fetch_assoc($result)):?>
+                                <option value="<?php echo $row["component_name"]; ?>"><?php echo $row["component_name"]; ?></option>  
+                        <?php endwhile;?>
+                    </select>
+                </td>
+                <td>
+                    <select name="sub_component">
+                        <option value="" disabled selected>--Choose sub_component--</option>
+                        <option value="1">All Sub Components</option>
+                        <?php
+                            $dbQuery = " SELECT DISTINCT sub_component_name FROM component_master ORDER BY sub_component_name ASC";   
+                            $result=mysqli_query($db,$dbQuery);
+                            if (mysqli_num_rows($result)>0)
+                            while($row = mysqli_fetch_assoc($result)):?>
+                                <option value="<?php echo $row["sub_component_name"]; ?>"><?php echo $row["sub_component_name"]; ?></option>  
+                        <?php endwhile;?>
+                    </select>
+                </td>
+                <td>
+                    <select name="phase">
+                        <option value="" disabled selected>--Choose phase--</option>
+                        <option value="1">All Phases</option>
+                        <option value="2">Phase I</option>
+                        <option value="3">Phase II</option>
+                        <option value="4">Phase III</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="status">
+                        <option value="" disabled selected>--Choose status--</option>
+                        <option value="1">All status</option>
+                        <option value="2">Started</option>
+                        <option value="3">In Progress</option>
+                        <option value="4">Completed</option>
+                        <option value="4">Stopped</option>
+                    </select>
+                </td>
+                
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button type="submit" id="applyBtn" class="btn" name="submit" onclick="GetSelected()" >Apply Filters</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </div>
+    <br>
+    <br>
+    <br>
+    <?php  
+    function get_confirmed_locations(){
+        $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
+        $dbQuery = " SELECT Latitude, Longitude FROM workitem ";
+        $sqldata =mysqli_query($db,$dbQuery);
+    
+        $rows = array();
+    
+        while($r = mysqli_fetch_assoc($sqldata)) {
+            $rows[] = $r;
+        }
+    
+        $indexed = array_map('array_values', $rows);
+    
+        echo json_encode($indexed);
+        if (!$rows) {
+            return null;
+        }
+    }
+    ?>
+
+        <div id="googleMap" style="width:1200px;height:800px;"></div>
+
+        <script>
+            function myMap() {
+                var mapProp= {
+                center:new google.maps.LatLng(20.5937, 78.9629),
+                zoom:5,
+               };
+            var markers = {};
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            var locations = <?php get_confirmed_locations() ?>;
+
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                map: map
+            });
+
+           
+        }
+    }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmhP6v-5RMAV2kKrRhXJBAsqXDtwDSu5I&callback=myMap"></script>
           
-	</div>
+       
+    </div>
+    
 </section>
 
 <footer id="footer"> 
