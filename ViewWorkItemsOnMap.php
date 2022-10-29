@@ -3,6 +3,8 @@
 <head>
 	<title>ViewWorkItemsOnMap</title>
 	<link rel="stylesheet" type="text/css" href="CSS/ViewWorkItemsOnMap.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.29/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.29/esri/css/esri.css">
 </head>
 <body>
 <div class="box-area">
@@ -184,16 +186,29 @@
             for (i = 0; i < locations.length; i++) {
                 marker = new google.maps.Marker({
                 position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                
                 map: map
             });
+
+            // const infowindow = new google.maps.InfoWindow({
+            //     content: "contentString",
+            //     ariaLabel: "Uluru",
+            // });
+            // marker.addListener("click", () => {
+            //     infowindow.open({
+            //     anchor: marker,
+            //     map,
+            //     });
+            // });
 
            
         }
     }
         </script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmhP6v-5RMAV2kKrRhXJBAsqXDtwDSu5I&callback=myMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQPnyGMJj5BL8vlDs-lOGCfipyWXduLbI&callback=myMap"></script>
           
+        
        
     </div>
     
