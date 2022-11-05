@@ -23,7 +23,8 @@
 </div> 
 <section id="home">
     <div class="main">
-          
+
+    </script>
 	</div>
 </section>
 

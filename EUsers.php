@@ -56,6 +56,38 @@
     <?php endwhile;?>
     </tbody>
   </table>
+<!-- 
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Phone Number</th>
+        <th>EmailId</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+     $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
+
+    $dbQuery = " SELECT * FROM users";   
+    $ret = $db->query($dbQuery);
+    if (mysqli_num_rows($result)>0)
+     while($row = $ret->fetchArray(SQLITE3_ASSOC)):?>
+            <tr id='tableRow' >
+                    <td><?php echo $row["iD"]; ?></td>
+                    <td><?php echo $row["name"]; ?></td>
+                    <td><?php echo $row["designation"]; ?></td>
+                    <td><?php echo $row["phoneNumber"]; ?></td>
+                    <td><?php echo $row["emailid"]; ?></td>
+                    
+            </tr>
+    <?php endwhile;?>
+    </tbody>
+  </table> -->
+
                 
           
 	</div>

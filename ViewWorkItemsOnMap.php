@@ -26,7 +26,7 @@
 <section id="home">
     <div class="main">
     <h1>All WorkItems on MAP</h1><br>
-    <div>
+    <!-- <div>
     <form action="" method="post">
     
         <table>
@@ -146,7 +146,7 @@
             </tr>
         </table>
     </form>
-    </div>
+    </div> -->
     <br>
     <br>
     <br>
@@ -171,7 +171,7 @@
     }
     ?>
 
-        <div id="googleMap" style="width:1200px;height:800px;"></div>
+        <div id="googleMap" style="width:1200px;height:1000px;"></div>
 
         <script>
             function myMap() {
