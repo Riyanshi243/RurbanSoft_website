@@ -27,7 +27,7 @@
     <div class="main">
     <h1>Following are the Existing Users in Central Database:</h1>
     <br>
-    <table class="table table-hover">
+    <!-- <table class="table table-hover">
     <thead>
       <tr>
         <th>ID</th>
@@ -55,8 +55,8 @@
             </tr>
     <?php endwhile;?>
     </tbody>
-  </table>
-<!-- 
+  </table> -->
+
   <table class="table table-hover">
     <thead>
       <tr>
@@ -70,23 +70,23 @@
     </thead>
     <tbody>
     <?php
-     $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
+    $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
 
-    $dbQuery = " SELECT * FROM users";   
-    $ret = $db->query($dbQuery);
-    if (mysqli_num_rows($result)>0)
-     while($row = $ret->fetchArray(SQLITE3_ASSOC)):?>
-            <tr id='tableRow' >
-                    <td><?php echo $row["iD"]; ?></td>
-                    <td><?php echo $row["name"]; ?></td>
-                    <td><?php echo $row["designation"]; ?></td>
-                    <td><?php echo $row["phoneNumber"]; ?></td>
-                    <td><?php echo $row["emailid"]; ?></td>
-                    
-            </tr>
-    <?php endwhile;?>
+    $query = 'SELECT * FROM users';
+    $result = pg_query($query) or die('Error message: ' . pg_last_error());
+
+    while ($row = pg_fetch_array($result)) :?>
+      <tr id='tableRow' >
+              <td><?php echo $row["id"]; ?></td>
+              <td><?php echo $row["name"]; ?></td>
+              <td><?php echo $row["designation"]; ?></td>
+              <td><?php echo $row["phonenumber"]; ?></td>
+              <td><?php echo $row["emailid"]; ?></td>
+              
+      </tr>
+<?php endwhile;?>
     </tbody>
-  </table> -->
+  </table>
 
                 
           

@@ -96,4 +96,52 @@ if(isset($_POST['approve'])){
  }
 }
 
+if(isset($_POST['approve'])){
+  if(!empty($_POST['check'])){
+  $phone=$_POST['approve'];
+  $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
+
+  $query = "SELECT Name FROM users WHERE PhoneNumber='$phone'";
+
+  $results = mysqli_query($db, $query);
+  $row = mysqli_fetch_assoc($results);
+  $name=$row["Name"];
+  $current_timestamp = microtime(TRUE);
+  $timestamp = date("d-m-Y", $current_timestamp);
+
+  foreach($_POST['check'] as $value){
+    $dbQuery = "INSERT INTO workitem_approved (workitem_id, approvedbyname, approvebyphonenumber, approveddate) VALUES ('".$value."', '".$name."', '".$phone."', '".$timestamp."')";   
+    $result=pg_query($dbQuery);
+  }
+
+
+  $query = "SELECT * FROM workitem WHERE ID='$value'";
+  $results = mysqli_query($db, $query);
+  $row = mysqli_fetch_assoc($results);
+
+  $UserName = $row['UserName']; 
+  $UserPhoneNumber=$row['UserPhoneNumber'];
+  $State=$row['State'];
+  $District=$row['District'];
+  $Cluster=$row['Cluster'];
+  $GP=$row['GP'];
+  $Components=$row['Components'];
+  $SubComponents=$row['SubComponents'];
+  $Status=$row['Status'];
+  $Phase=$row['Phase'];
+  $Latitude=$row['Latitude'];
+  $Longitude=$row['Longitude'];
+  $Image= base64_decode($row['Image']);
+  $DateTime=$row['DateTime'];
+
+  foreach($_POST['check'] as $value){
+    $dbQuery = "INSERT INTO workitem (id, username, userphonenumber, state, district, cluster, gp, components, subcomponents, status, phase, latitude, longitude, datetime)  VALUES ('".$value."', '".$UserName."', '".$UserPhoneNumber."', '".$State."', '".$District."', '".$Cluster."','".$GP."','".$Components."','".$SubComponents."','".$Status."','".$Phase."','".$Latitude."','".$Longitude."','".$DateTime."')";   
+    $result=pg_query($dbQuery);
+  }
+
+
+
+ }
+}
+
 ?>

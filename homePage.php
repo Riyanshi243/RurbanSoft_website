@@ -80,7 +80,7 @@
                 };
           </script>
 
-          <!-- <div class="boxs" id="PhaseWise">
+          <div class="boxs" id="PhaseWise">
             <p class="headings"> View WorkItems Phase Wise </p>
           </div>
           <script>
@@ -89,7 +89,7 @@
                 PhaseWise.onclick = function() {
                     window.open("PhaseWise.php","_self");
                 };
-          </script> -->
+          </script>
 
           <div class="boxs" id="ApproveWorkItems">
             <p class="headings"> Approve WorkItems </p>
