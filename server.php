@@ -114,7 +114,8 @@ if(isset($_POST['approve'])){
     $result=pg_query($dbQuery);
   }
 
-
+  foreach($_POST['check'] as $value){
+    
   $query = "SELECT * FROM workitem WHERE ID='$value'";
   $results = mysqli_query($db, $query);
   $row = mysqli_fetch_assoc($results);
@@ -131,12 +132,16 @@ if(isset($_POST['approve'])){
   $Phase=$row['Phase'];
   $Latitude=$row['Latitude'];
   $Longitude=$row['Longitude'];
-  $Image= base64_decode($row['Image']);
+  $Image= base64_encode($row['Image']);
   $DateTime=$row['DateTime'];
 
-  foreach($_POST['check'] as $value){
-    $dbQuery = "INSERT INTO workitem (id, username, userphonenumber, state, district, cluster, gp, components, subcomponents, status, phase, latitude, longitude, datetime)  VALUES ('".$value."', '".$UserName."', '".$UserPhoneNumber."', '".$State."', '".$District."', '".$Cluster."','".$GP."','".$Components."','".$SubComponents."','".$Status."','".$Phase."','".$Latitude."','".$Longitude."','".$DateTime."')";   
+  
+    $dbQuery = "INSERT INTO workitem (id, username, userphonenumber, state, district, cluster, gp, components, subcomponents, status, phase, latitude, longitude, image, datetime)  VALUES ('".$value."', '".$UserName."', '".$UserPhoneNumber."', '".$State."', '".$District."', '".$Cluster."','".$GP."','".$Components."','".$SubComponents."','".$Status."','".$Phase."','".$Latitude."','".$Longitude."','".$Image."','".$DateTime."')";   
     $result=pg_query($dbQuery);
+
+    // $dbQuery = "INSERT INTO workitem (image) values decode('".$Image."', 'base64')";   
+    // $result=pg_query($dbQuery);
+    
   }
 
 

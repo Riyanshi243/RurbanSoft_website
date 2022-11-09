@@ -86,8 +86,56 @@
       </tr>
 <?php endwhile;?>
     </tbody>
-  </table>
+  <!-- </table>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>State</th>
+        <th>District</th>
+        <th>Cluster</th>
+        <th>Gram Panchayat</th>
+        <th>Component</th>
+        <th>Sub Component</th>
+        <th>Phase</th>
+        <th>Status</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Date and Time Taken</th>
+        <th>Workitem Image</th>
+        <th>Uploaded By User</th>
+        <th>User Phone Number</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+     $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
 
+     $query = 'SELECT * FROM workitem';
+     $result = pg_query($query) or die('Error message: ' . pg_last_error());
+ 
+     while ($row = pg_fetch_array($result)) :?>
+            <tr id='tableRow' >
+                    <td><?php echo $row["id"]; ?></td>
+                    <td><?php echo $row["state"]; ?></td>
+                    <td><?php echo $row["district"]; ?></td>
+                    <td><?php echo $row["cluster"]; ?></td>
+                    <td><?php echo $row["gp"]; ?></td>
+                    <td><?php echo $row["components"]; ?></td>
+                    <td><?php echo $row["subcomponents"]; ?></td>
+                    <td><?php echo $row["phase"]; ?></td>
+                    <td><?php echo $row["status"]; ?></td>
+                    <td><?php echo $row["latitude"]; ?></td>
+                    <td><?php echo $row["longitude"]; ?></td>
+                    <td><?php echo $row["datetime"]; ?></td>
+                    <td ><?php echo "<img src= './getFileImage.php?id=".$row['id']."' width=100px height=100px/>" ?> </td>
+                    <td><?php echo $row["username"]; ?></td>
+                    <td><?php echo $row["userphonenumber"]; ?></td>
+                   
+            </tr>
+    <?php endwhile;?>
+    </tbody>
+  </table> -->
                 
           
 	</div>
