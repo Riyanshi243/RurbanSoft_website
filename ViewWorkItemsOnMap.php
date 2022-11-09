@@ -3,8 +3,11 @@
 <head>
 	<title>ViewWorkItemsOnMap</title>
 	<link rel="stylesheet" type="text/css" href="CSS/ViewWorkItemsOnMap.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.29/dijit/themes/tundra/tundra.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.29/esri/css/esri.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+     integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+     crossorigin=""/>
+     <script type="text/javascript" src="js/jQueryFilter.js"></script>
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <body>
 <div class="box-area">
@@ -26,7 +29,7 @@
 <section id="home">
     <div class="main">
     <h1>All WorkItems on MAP</h1><br>
-    <!-- <div>
+    <div>
     <form action="" method="post">
     
         <table>
@@ -92,8 +95,22 @@
             </tr>
             <br>
             <tr>
+                <!-- <td><select name="webste" class="sel">
+    <option>--Select Website--</option>
+    <option value="it">ItSolutionStuff.com</option>
+    <option value="hd">HDTuto.com</option>
+    <option value="nice">NiceSnippets.com</option>
+</select>
+   
+<script type="text/javascript">
+    $(".sel").change(function(){
+        var selValue = $(this).val();
+        alert(selValue);
+    });
+</script></td> -->
                 <td>
-                    <select name="component">
+                    <select name="component" class="component" id="component">
+                    
                         <option value="" disabled selected>--Choose component--</option>
                         <option value="1">All Components</option>
                         <?php
@@ -104,13 +121,23 @@
                                 <option value="<?php echo $row["component_name"]; ?>"><?php echo $row["component_name"]; ?></option>  
                         <?php endwhile;?>
                     </select>
+                    <script type="text/javascript">
+                        $(".component").change(function(){
+                            var selValue = $(this).val();
+                            alert(selValue);
+                            document.getElementById("component").value = selValue;
+                            
+                        });
+                    </script>
                 </td>
+                
                 <td>
-                    <select name="sub_component">
+                    <select name="sub_component" id="sub_component">
                         <option value="" disabled selected>--Choose sub_component--</option>
                         <option value="1">All Sub Components</option>
                         <?php
-                            $dbQuery = " SELECT DISTINCT sub_component_name FROM component_master ORDER BY sub_component_name ASC";   
+                            $val=$_POST['component'];
+                            $dbQuery = " SELECT DISTINCT sub_component_name FROM component_master WHERE component_name = '$val'";   
                             $result=mysqli_query($db,$dbQuery);
                             if (mysqli_num_rows($result)>0)
                             while($row = mysqli_fetch_assoc($result)):?>
@@ -146,70 +173,14 @@
             </tr>
         </table>
     </form>
-    </div> -->
+    
+    </div>
     <br>
     <br>
     <br>
-    <?php  
-    function get_confirmed_locations(){
-        $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
-        $dbQuery = " SELECT Latitude, Longitude FROM workitem ";
-        $sqldata =mysqli_query($db,$dbQuery);
-    
-        $rows = array();
-    
-        while($r = mysqli_fetch_assoc($sqldata)) {
-            $rows[] = $r;
-        }
-    
-        $indexed = array_map('array_values', $rows);
-    
-        echo json_encode($indexed);
-        if (!$rows) {
-            return null;
-        }
-    }
-    ?>
+        <div id="map" style="width: 1200px; height: 700px; position:flex"></div>
 
-        <div id="googleMap" style="width:1200px;height:1000px;"></div>
 
-        <script>
-            function myMap() {
-                var mapProp= {
-                center:new google.maps.LatLng(20.5937, 78.9629),
-                zoom:5,
-               };
-            var markers = {};
-            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-            var locations = <?php get_confirmed_locations() ?>;
-
-            for (i = 0; i < locations.length; i++) {
-                marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-                
-                map: map
-            });
-
-            // const infowindow = new google.maps.InfoWindow({
-            //     content: "contentString",
-            //     ariaLabel: "Uluru",
-            // });
-            // marker.addListener("click", () => {
-            //     infowindow.open({
-            //     anchor: marker,
-            //     map,
-            //     });
-            // });
-
-           
-        }
-    }
-        </script>
-
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQPnyGMJj5BL8vlDs-lOGCfipyWXduLbI&callback=myMap"></script>
-          
-        
-       
     </div>
     
 </section>
@@ -230,5 +201,32 @@
 </footer>
 
 </body>
+
+<script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+     integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+     crossorigin=""></script>
+<script>
+
+var map = L.map('map').setView([21.206051, 81.447886], 8);
+mapLink =
+  '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+L.tileLayer(
+  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; ' + mapLink + ' Contributors',
+    maxZoom: 5,
+  }).addTo(map);
+  <?php
+    $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
+    $dbQuery = " SELECT * FROM workitem";   
+    $result=mysqli_query($db,$dbQuery);
+    if (mysqli_num_rows($result)>0)
+     while($row = mysqli_fetch_assoc($result)):?>
+     marker = new L.marker([<?php echo $row["Latitude"]; ?>, <?php echo $row["Longitude"]; ?>])
+    .bindPopup("<h4>State: <?php echo $row["State"]; ?> </h4> <h4>District: <?php echo $row["District"]; ?> </h4> <h4>Cluster: <?php echo $row["Cluster"]; ?> </h4> <h4>GP: <?php echo $row["GP"]; ?> </h4> <h4>Components: <?php echo $row["Components"]; ?>  </h4> <h4>SubComponents: <?php echo $row["SubComponents"]; ?> </h4><h4>Status:  <?php echo $row["Status"]; ?> </h4> <h4>Phase:  <?php echo $row["Phase"]; ?>  </h4> <h4>Capture Time: <?php echo $row["DateTime"]; ?> </h4> <img src='data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['Image']); ?>'  width='300' height='200' /> ")
+    .addTo(map);
+           
+    <?php endwhile;?>
+
+</script>
 </html>
 

@@ -1,7 +1,5 @@
 <?php
-$con = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
-
-
+require '../config/pg_config.php';
 $code = $_GET['id'];   // file code
     pg_query('SET bytea_output = "escape";');
     $query = "SELECT \"IMAGE\" FROM workitem WHERE \"ID\" = $code";

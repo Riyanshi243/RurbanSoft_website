@@ -1,6 +1,5 @@
 <?php
-$con = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
-
+require '../config/pg_config.php';
 
 $id = $_GET['id'];   // state code
 

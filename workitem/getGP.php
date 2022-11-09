@@ -1,7 +1,5 @@
 <?php
-$con = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
-
-
+require '../config/pg_config.php';
 $id = $_GET['id'];   // state code
 
 $result = pg_query($con,"SELECT distinct \"gp_code\", \"gp_name\" FROM public.cluster_master Where \"clucter_code\" = $id order by gp_name" )or die('could not execute query');

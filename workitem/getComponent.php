@@ -1,5 +1,5 @@
 <?php
- $con = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
+require '../config/pg_config.php';
 $id = $_GET['id'];   // component code
 
 $result = pg_query($con,"SELECT distinct \"component_id\", \"component_name\" FROM public.component_master order by component_name" )or die('could not execute query');
