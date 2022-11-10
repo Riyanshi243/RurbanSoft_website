@@ -26,7 +26,7 @@
     </div> 
 <section id="home">
     <div class="main">
-    <div id="map" style="width: 600px; height: 400px;"></div>
+    <!-- <div id="map" style="width: 600px; height: 400px;"></div> -->
 
 	</div>
 </section>
