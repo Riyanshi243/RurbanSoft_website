@@ -110,7 +110,7 @@ if(isset($_POST['approve'])){
   $timestamp = date("d-m-Y", $current_timestamp);
 
   foreach($_POST['check'] as $value){
-    $dbQuery = "INSERT INTO workitem_approved (workitem_id, approvedbyname, approvebyphonenumber, approveddate) VALUES ('".$value."', '".$name."', '".$phone."', '".$timestamp."')";   
+    $dbQuery = "INSERT INTO approved_workitem_ids (workitem_id, approvedbyname, approvebyphonenumber, approveddate) VALUES ('".$value."', '".$name."', '".$phone."', '".$timestamp."')";   
     $result=pg_query($dbQuery);
   }
 
@@ -132,11 +132,11 @@ if(isset($_POST['approve'])){
   $Phase=$row['Phase'];
   $Latitude=$row['Latitude'];
   $Longitude=$row['Longitude'];
-  $Image= base64_encode($row['Image']);
+  $Image= pg_escape_bytea($row['Image']);
   $DateTime=$row['DateTime'];
 
   
-    $dbQuery = "INSERT INTO workitem (id, username, userphonenumber, state, district, cluster, gp, components, subcomponents, status, phase, latitude, longitude, image, datetime)  VALUES ('".$value."', '".$UserName."', '".$UserPhoneNumber."', '".$State."', '".$District."', '".$Cluster."','".$GP."','".$Components."','".$SubComponents."','".$Status."','".$Phase."','".$Latitude."','".$Longitude."','".$Image."','".$DateTime."')";   
+    $dbQuery = "INSERT INTO approved_workitems (workitem_id, username, userphonenumber, state, district, cluster, gp, components, subcomponents, status, phase, latitude, longitude, image, datetime)  VALUES ('".$value."', '".$UserName."', '".$UserPhoneNumber."', '".$State."', '".$District."', '".$Cluster."','".$GP."','".$Components."','".$SubComponents."','".$Status."','".$Phase."','".$Latitude."','".$Longitude."','".$Image."','".$DateTime."')";   
     $result=pg_query($dbQuery);    
   }
  }

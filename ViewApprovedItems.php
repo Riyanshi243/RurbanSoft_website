@@ -63,38 +63,38 @@
     </thead>
     <tbody>
     <?php
-    $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
-    $dbQuery = " SELECT * FROM workitem WHERE ID IN (SELECT workItem_ID FROM workitem_approved) ORDER BY ID ASC";   
+    $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
+    $dbQuery = " SELECT * FROM approved_workitems ORDER BY workitem_id ASC";   
     if(isset($_POST['submit'])){
         if(!empty($_POST['filter'])){
             $phone=$_POST['submit'];
             $selected = $_POST['filter'];
             if($selected==2)
-                $dbQuery = " SELECT * FROM workitem WHERE ID IN (SELECT workItem_ID FROM workitem_approved WHERE ApproveByPhoneNumber = '".$phone."') ORDER BY ID ASC";
+                $dbQuery = " SELECT * FROM approved_workitems WHERE workitem_id IN (SELECT workitem_id FROM approved_workitem_ids WHERE approvebyphonenumber = '".$phone."') ORDER BY workitem_id ASC";
             if($selected==3)
-                $dbQuery = " SELECT * FROM workitem WHERE ID IN (SELECT workItem_ID FROM workitem_approved WHERE ApproveByPhoneNumber != '".$phone."') ORDER BY ID ASC";
+                $dbQuery = " SELECT * FROM approved_workitems WHERE workitem_id IN (SELECT workitem_id FROM approved_workitem_ids WHERE approvebyphonenumber != '".$phone."') ORDER BY workitem_id ASC";
             }
     }
 
-    $result=mysqli_query($db,$dbQuery);
-    if (mysqli_num_rows($result)>0)
-     while($row = mysqli_fetch_assoc($result)):?>
+    $result = pg_query($dbQuery) or die('Error message: ' . pg_last_error());
+    
+     while($row = pg_fetch_array($result)):?>
             <tr id='tableRow' >
-                    <td><?php echo $row["ID"]; ?></td>
-                    <td><?php echo $row["State"]; ?></td>
-                    <td><?php echo $row["District"]; ?></td>
-                    <td><?php echo $row["Cluster"]; ?></td>
-                    <td><?php echo $row["GP"]; ?></td>
-                    <td><?php echo $row["Components"]; ?></td>
-                    <td><?php echo $row["SubComponents"]; ?></td>
-                    <td><?php echo $row["Phase"]; ?></td>
-                    <td><?php echo $row["Status"]; ?></td>
-                    <td><?php echo $row["Latitude"]; ?></td>
-                    <td><?php echo $row["Longitude"]; ?></td>
-                    <td><?php echo $row["DateTime"]; ?></td>
-                    <td ><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['Image']); ?>"  width="100" height="100"/> </td>
-                    <td><?php echo $row["UserName"]; ?></td>
-                    <td><?php echo $row["UserPhoneNumber"]; ?></td>
+                    <td><?php echo $row["workitem_id"]; ?></td>
+                    <td><?php echo $row["state"]; ?></td>
+                    <td><?php echo $row["district"]; ?></td>
+                    <td><?php echo $row["cluster"]; ?></td>
+                    <td><?php echo $row["gp"]; ?></td>
+                    <td><?php echo $row["components"]; ?></td>
+                    <td><?php echo $row["subcomponents"]; ?></td>
+                    <td><?php echo $row["phase"]; ?></td>
+                    <td><?php echo $row["status"]; ?></td>
+                    <td><?php echo $row["latitude"]; ?></td>
+                    <td><?php echo $row["longitude"]; ?></td>
+                    <td><?php echo $row["datetime"]; ?></td>
+                    <td ><?php echo "<img src= 'getFileImage.php?id=".$row['workitem_id']."' width=100px height=100px/>" ?> </td>
+                    <td><?php echo $row["username"]; ?></td>
+                    <td><?php echo $row["userphonenumber"]; ?></td>
                    
             </tr>
     <?php endwhile;?>

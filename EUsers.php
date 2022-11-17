@@ -86,10 +86,12 @@
       </tr>
 <?php endwhile;?>
     </tbody>
-  </table> 
+  </table>
+                
           
 	</div>
 </section>
+
 
 
 </body>

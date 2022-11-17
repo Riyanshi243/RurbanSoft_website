@@ -3,7 +3,7 @@
 
 $code = $_GET['id'];   // file code
     pg_query('SET bytea_output = "escape";');
-    $query = "SELECT image FROM workitem WHERE id = $code";
+    $query = "SELECT image FROM approved_workitems WHERE workitem_id = $code";
     $res = pg_query($con, $query) or die (pg_last_error($con)); 
     //Image fetching and conversion and storing into the file.jpg
     $img = pg_fetch_result($res, 'image');

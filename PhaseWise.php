@@ -177,14 +177,14 @@ function style(feature) {
 }
        <?php
 
-            $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
-            $dbQuery = " SELECT * FROM workitem WHERE ID IN (SELECT workItem_ID FROM workitem_approved)"; 
-                        
-            $result=mysqli_query($db,$dbQuery);
-            if (mysqli_num_rows($result)>0)
-            while($row = mysqli_fetch_assoc($result)):?>
-            marker = new L.marker([<?php echo $row["Latitude"]; ?>, <?php echo $row["Longitude"]; ?>])
-            .bindPopup("<h4>State: <?php echo $row["State"]; ?> </h4> <h4>District: <?php echo $row["District"]; ?> </h4> <h4>Cluster: <?php echo $row["Cluster"]; ?> </h4> <h4>GP: <?php echo $row["GP"]; ?> </h4> <h4>Components: <?php echo $row["Components"]; ?>  </h4> <h4>SubComponents: <?php echo $row["SubComponents"]; ?> </h4><h4>Status:  <?php echo $row["Status"]; ?> </h4> <h4>Phase:  <?php echo $row["Phase"]; ?>  </h4> <h4>Capture Time: <?php echo $row["DateTime"]; ?> </h4> <img src='data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['Image']); ?>'  width='300' height='200' /> ")
+            $db_conn = pg_connect("host=localhost dbname=mrurban user=postgres password=Riyanshi") or die("could not connect to NRuM Postgres database");
+
+            $query = 'SELECT * FROM approved_workitems';
+            $result = pg_query($query) or die('Error message: ' . pg_last_error());
+            
+            while($row = pg_fetch_array($result)):?>
+            marker = new L.marker([<?php echo $row["latitude"]; ?>, <?php echo $row["longitude"]; ?>])
+            .bindPopup("<h4>State: <?php echo $row["state"]; ?> </h4> <h4>District: <?php echo $row["district"]; ?> </h4> <h4>Cluster: <?php echo $row["cluster"]; ?> </h4> <h4>GP: <?php echo $row["gp"]; ?> </h4> <h4>Components: <?php echo $row["components"]; ?>  </h4> <h4>SubComponents: <?php echo $row["subcomponents"]; ?> </h4><h4>Status:  <?php echo $row["status"]; ?> </h4> <h4>Phase:  <?php echo $row["phase"]; ?>  </h4> <h4>Capture Time: <?php echo $row["datetime"]; ?> </h4> <?php echo "<img src= 'getFileImage.php?id=".$row['workitem_id']."' width=300px height=200px/>" ?> ")
             .addTo(map);
             
                 
