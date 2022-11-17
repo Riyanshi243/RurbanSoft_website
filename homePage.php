@@ -80,17 +80,6 @@
                 };
           </script>
 
-          <div class="boxs" id="PhaseWise">
-            <p class="headings"> View WorkItems Phase Wise </p>
-          </div>
-          <script>
-                var PhaseWise = document.getElementById('PhaseWise');
-                PhaseWise.style.cursor = 'pointer';
-                PhaseWise.onclick = function() {
-                    window.open("PhaseWise.php","_self");
-                };
-          </script>
-
           <div class="boxs" id="ApproveWorkItems">
             <p class="headings"> Approve WorkItems </p>
           </div>
@@ -110,6 +99,17 @@
                 viewApprovedItems.style.cursor = 'pointer';
                 viewApprovedItems.onclick = function() {
                     window.open("ViewApprovedItems.php","_self");
+                };
+          </script>
+
+          <div class="boxs" id="PhaseWise">
+            <p class="headings"> View Approved WorkItems on Map</p>
+          </div>
+          <script>
+                var PhaseWise = document.getElementById('PhaseWise');
+                PhaseWise.style.cursor = 'pointer';
+                PhaseWise.onclick = function() {
+                    window.open("PhaseWise.php","_self");
                 };
           </script>
 

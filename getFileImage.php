@@ -6,7 +6,7 @@ $code = $_GET['id'];   // file code
     $query = "SELECT image FROM workitem WHERE id = $code";
     $res = pg_query($con, $query) or die (pg_last_error($con)); 
     //Image fetching and conversion and storing into the file.jpg
-    $img = pg_fetch_result($res, '"IMAGE"');
+    $img = pg_fetch_result($res, 'image');
     $unes_image = pg_unescape_bytea($img);
     header('Content-Type: image/jpeg');
     echo ($unes_image);

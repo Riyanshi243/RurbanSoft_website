@@ -247,7 +247,71 @@
             
             $db = mysqli_connect('127.0.0.1', 'root', '', 'mrurban');
             $dbQuery = " SELECT * FROM workitem"; 
-            
+            if(!empty($_POST['component']))
+                {
+                    $component=$_POST['component'];
+                    $dbQuery = " SELECT * FROM workitem WHERE Components='$component'"; 
+                    if(!empty($_POST['status']))
+                    {
+                        $status=$_POST['status'];
+                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND status='$status' "; 
+                    }
+                    if(!empty($_POST['phase']))
+                    {
+                        $phase=$_POST['phase'];
+                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND phase='$phase' "; 
+                    }
+                    if(!empty($_POST['status']))
+                    if(!empty($_POST['phase']))
+                    {
+                        $status=$_POST['status'];
+                        $phase=$_POST['phase'];
+                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND status='$status' AND  phase='$phase' "; 
+                    }
+                    
+                }
+                if(!empty($_POST['component']))
+                if(!empty($_POST['sub_component']))
+                {
+                    $component=$_POST['component'];
+                    $sub_component=$_POST['sub_component'];
+                    $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component'";
+                    if(!empty($_POST['status']))
+                    {
+                        $status=$_POST['status'];
+                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component' AND status='$status' "; 
+                    }
+                    if(!empty($_POST['phase']))
+                    {
+                        $phase=$_POST['phase'];
+                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component' AND phase='$phase' "; 
+                    }
+                    if(!empty($_POST['status']))
+                    if(!empty($_POST['phase']))
+                    {
+                        $status=$_POST['status'];
+                        $phase=$_POST['phase'];
+                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component' AND status='$status' AND  phase='$phase' "; 
+                    } 
+                }
+                if(!empty($_POST['status']))
+                    {
+                        $status=$_POST['status'];
+                        $dbQuery = " SELECT * FROM workitem WHERE status='$status' "; 
+                    }
+                    if(!empty($_POST['phase']))
+                    {
+                        $phase=$_POST['phase'];
+                        $dbQuery = " SELECT * FROM workitem WHERE phase='$phase' "; 
+                    }
+                    if(!empty($_POST['status']))
+                    if(!empty($_POST['phase']))
+                    {
+                        $status=$_POST['status'];
+                        $phase=$_POST['phase'];
+                        $dbQuery = " SELECT * FROM workitem WHERE status='$status' AND  phase='$phase' "; 
+                    } 
+       
             if(!empty($_POST['state']))
             {
                 $state=$_POST['state'];
@@ -355,71 +419,7 @@
                     } 
                 }
             }
-            if(!empty($_POST['component']))
-                {
-                    $component=$_POST['component'];
-                    $dbQuery = " SELECT * FROM workitem WHERE Components='$component'"; 
-                    if(!empty($_POST['status']))
-                    {
-                        $status=$_POST['status'];
-                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND status='$status' "; 
-                    }
-                    if(!empty($_POST['phase']))
-                    {
-                        $phase=$_POST['phase'];
-                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND phase='$phase' "; 
-                    }
-                    if(!empty($_POST['status']))
-                    if(!empty($_POST['phase']))
-                    {
-                        $status=$_POST['status'];
-                        $phase=$_POST['phase'];
-                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND status='$status' AND  phase='$phase' "; 
-                    }
-                    
-                }
-                if(!empty($_POST['component']))
-                if(!empty($_POST['sub_component']))
-                {
-                    $component=$_POST['component'];
-                    $sub_component=$_POST['sub_component'];
-                    $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component'";
-                    if(!empty($_POST['status']))
-                    {
-                        $status=$_POST['status'];
-                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component' AND status='$status' "; 
-                    }
-                    if(!empty($_POST['phase']))
-                    {
-                        $phase=$_POST['phase'];
-                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component' AND phase='$phase' "; 
-                    }
-                    if(!empty($_POST['status']))
-                    if(!empty($_POST['phase']))
-                    {
-                        $status=$_POST['status'];
-                        $phase=$_POST['phase'];
-                        $dbQuery = " SELECT * FROM workitem WHERE Components='$component' AND SubComponents='$sub_component' AND status='$status' AND  phase='$phase' "; 
-                    } 
-                }
-                if(!empty($_POST['status']))
-                    {
-                        $status=$_POST['status'];
-                        $dbQuery = " SELECT * FROM workitem WHERE status='$status' "; 
-                    }
-                    if(!empty($_POST['phase']))
-                    {
-                        $phase=$_POST['phase'];
-                        $dbQuery = " SELECT * FROM workitem WHERE phase='$phase' "; 
-                    }
-                    if(!empty($_POST['status']))
-                    if(!empty($_POST['phase']))
-                    {
-                        $status=$_POST['status'];
-                        $phase=$_POST['phase'];
-                        $dbQuery = " SELECT * FROM workitem WHERE status='$status' AND  phase='$phase' "; 
-                    } 
-       
+            
             
             $result=mysqli_query($db,$dbQuery);
             if (mysqli_num_rows($result)>0)

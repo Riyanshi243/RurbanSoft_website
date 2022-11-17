@@ -137,15 +137,8 @@ if(isset($_POST['approve'])){
 
   
     $dbQuery = "INSERT INTO workitem (id, username, userphonenumber, state, district, cluster, gp, components, subcomponents, status, phase, latitude, longitude, image, datetime)  VALUES ('".$value."', '".$UserName."', '".$UserPhoneNumber."', '".$State."', '".$District."', '".$Cluster."','".$GP."','".$Components."','".$SubComponents."','".$Status."','".$Phase."','".$Latitude."','".$Longitude."','".$Image."','".$DateTime."')";   
-    $result=pg_query($dbQuery);
-
-    // $dbQuery = "INSERT INTO workitem (image) values decode('".$Image."', 'base64')";   
-    // $result=pg_query($dbQuery);
-    
+    $result=pg_query($dbQuery);    
   }
-
-
-
  }
 }
 
